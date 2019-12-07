@@ -7,7 +7,7 @@
 
         <div class="w-25">
             <div class="medium-font h-50 yellow align-items-center justify-content-center">set</div>
-            <div class="medium-font h-50 orange align-items-center justify-content-center">clear</div>
+            <div class="medium-font h-50 orange align-items-center justify-content-center" @click="resetTimer">clear</div>
         </div>
 
         <div class="bg-light w-25">
@@ -83,6 +83,16 @@ export default {
             this.running = false;
             this.pause = true;
             clearInterval(this.tInterval);
+        },
+        resetTimer(){
+            clearInterval(this.tInterval);
+            this.time = null;
+            this.tInterval = null;
+            this.running = false;
+            this.paused = false;
+            this.end = false;
+            this.setMode = false;
+            this.setDeadline({ minutes: 5});
         },
         formatTime() {
             this.formattedTime = this.time.subtract({hours: 16}).format('HH:mm:ss:SS');

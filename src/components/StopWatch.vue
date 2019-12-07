@@ -1,16 +1,16 @@
 <template>
     <div class="d-flex border-bottom flex-fill">
-        <div class="large-font flex-grow-1 d-flex align-items-center justify-content-center" @click="mainClick()" :class="[running ? 'run' : 'pause']">
+        <div class="large-font flex-grow-1 d-flex align-items-center justify-content-center" @click="handleMainClick()" :class="[running ? 'run' : 'pause']">
             {{ formattedTime }}
         </div>
 
         <div class="w-25">
             <div class="medium-font h-50 yellow d-flex align-items-center justify-content-center" @click="split">
-                split
+                Split
             </div>
 
             <div class="medium-font h-50 orange d-flex align-items-center justify-content-center" @click="resetTimer">
-                reset
+                Reset
             </div>
         </div>
 
@@ -25,18 +25,22 @@
 </template>
 
 <script>
+import moment from 'moment';
 export default {
     name: 'stopwatch',
 
     data() {
         return {
-            startTime: null,
-            updatedTime: null,
-            difference: null,
-            tInterval: null,
-            savedTime: null,
-            running: false,
             formattedTime: '00:00:00:00',
+
+            startTime: null,
+            savedTime: null,
+            elapsed: moment.duration(0),
+            tInterval: null,
+
+            running: false,
+            paused: false,
+
             splits: [
                 {
                     value: '00:00:00:00',
@@ -56,13 +60,12 @@ export default {
                 }
             ],
             currSplit: 0,
-            time: null
         }
     },
 
     methods: {
         
-        mainClick() {
+        handleMainClick() {
             if(!this.running) {
                 this.startTimer();
             }else {
@@ -71,15 +74,24 @@ export default {
         },
 
         startTimer() {
-            this.startTime = new Date().getTime();
-            this.tInterval = setInterval(this.getShowTime, 1);
+
+            this.startTime = moment();
+
+            this.tInterval = setInterval(() => {
+                this.elapsed = moment.duration(moment().diff(this.startTime));
+                this.elapsed.add(this.savedTime);
+                this.formatTime();
+            },1);
+
             this.running = true;
+            this.paused = false;
         },
 
         pauseTimer() {
             clearInterval(this.tInterval);
-            this.savedTime = this.difference;
+            this.savedTime = this.elapsed;
             this.running = false;
+            this.paused = true;
         },
 
         split() {
@@ -92,8 +104,7 @@ export default {
 
         resetTimer() {
             clearInterval(this.tInterval);
-            this.savedTime = 0;
-            this.difference = 0;
+            this.savedTime = null;
             this.running = false;
             this.formattedTime = '00:00:00:00';
             this.currSplit = 0;
@@ -104,26 +115,18 @@ export default {
             }
         },
         
-        getShowTime() {
-            this.updatedTime = new Date().getTime();
+        formatTime() {
+            let cents = Math.floor(this.elapsed.milliseconds() / 10);
+            let seconds = this.elapsed.seconds();
+            let minutes = this.elapsed.minutes();
+            let hours = this.elapsed.hours();
 
-            if(this.savedTime) {
-                this.difference = (this.updatedTime - this.startTime) + this.savedTime;
-            }else {
-                this.difference = this.updatedTime - this.startTime;
-            }
+            cents = cents <= 9 ? '0' + cents : cents;
+            seconds = seconds <= 9 ? '0' + seconds : seconds;
+            minutes = minutes <= 9 ? '0' + minutes : minutes;
+            hours = hours <= 9 ? '0' + hours : hours;
 
-            let hours = Math.floor((this.difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            let minutes = Math.floor((this.difference % (1000 * 60 * 60)) / (1000 * 60));
-            let seconds = Math.floor((this.difference % (1000 * 60)) / 1000);
-            let hundredths = Math.floor((this.difference % (1000)) / 10);
-
-            hours = (hours < 10) ? '0' + hours : hours;
-            minutes = (minutes < 10) ? '0' + minutes : minutes;
-            seconds = (seconds < 10) ? '0' + seconds : seconds;
-            hundredths = (hundredths < 10) ? '0' + hundredths : hundredths;
-
-            this.formattedTime = hours + ':' + minutes + ':' + seconds + ':' + hundredths;
+            this.formattedTime = hours + ":" + minutes + ":" + seconds + ":" + cents;
         }
     }
 }

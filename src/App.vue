@@ -2,7 +2,9 @@
   <div id="app" class="bg-dark">
     <NavBar :activeCollection='activeCollection' @chooseCollection='chooseCollection($event)' />
     <div id='container' class='container jumbotron mt-5 p-2'>
-      <component :is='activeCollection'></component>
+      <keep-alive>
+        <component :is='activeCollection'></component>
+      </keep-alive>
     </div>
     <Footer />
   </div>

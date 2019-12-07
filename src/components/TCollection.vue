@@ -12,7 +12,6 @@
                         <p class="medium-font">{{ index + 1 }}</p>
                     </div>
                 </div>
-
                 <component :is="timer.obj"></component>
             </div>
         </div>
