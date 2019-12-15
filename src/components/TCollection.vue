@@ -1,21 +1,21 @@
 <template>
     <div>
         <p class="display-2">Timer</p>
-        <div v-for="(timer, index) in timers" :key="timer.id">
-            <div class="d-flex p-2">
+        <div v-for="(timer, index) in timers" :key="timer.id" class="container row m-2 p-2">
 
-                <div class="d-flex align-items-center justify-content-center" style="width: 100px">
+            <div class="d-flex align-items-center justify-content-center border" style="width: 100px" @mouseover="timer.hover=true" @mouseout="timer.hover=false">
 
-                    <i id="close" v-if="timer.hover" class="far fa-times-circle" @click='removeTimer(index)' @mouseover="timer.hover=true" @mouseout="timer.hover=false"></i>
 
-                    <div v-else @mouseover="timer.hover=true" @mouseout="timer.hover=false">
-                        <p class="medium-font">{{ index + 1 }}</p>
-                    </div>
-                </div>
-                <component :is="timer.obj"></component>
+                <i v-if="timer.hover && timers.length > 1" class="fas fa-times-circle medium-font" @click='removeTimer(index)'></i>
+                <div v-else class="medium-font" >{{ index + 1 }}</div>
+
             </div>
+            
+            <component :is="timer.obj" style="width: 1px"></component>
+
         </div>
-        <i v-if="timers.length < 4" @click='addTimer' class="fas fa-plus-circle fa-3x"></i>
+
+        <i v-if="timers.length < 4" @click='addTimer' class="fas fa-plus-circle fa-3x medium-font" ></i>
     </div>
 </template>
 
@@ -25,7 +25,7 @@ import Timer from './Timer.vue';
 let tid = 0;
 
 export default {
-    new: 'TCollection',
+    name: 'TCollection',
     components: {
         Timer
     },
@@ -42,7 +42,7 @@ export default {
 
         removeTimer(i) {
             this.timers.splice(i, 1);
-        }
+        },
     },
     created() {
         this.addTimer();

@@ -1,20 +1,19 @@
 <template>
     <div>
         <p class="display-2">StopWatch</p>
-        <div v-for="(watch, index) in watches" :key="watch.id">
-            <div class="d-flex p-2">
+        <div v-for="(watch, index) in watches" :key="watch.id" class="container row m-2 p-2">
 
-                <div class="d-flex align-items-center justify-content-center" style="width: 100px">
+            <div class="d-flex align-items-center justify-content-center border" style="width: 100px" @mouseover="watch.hover=true" @mouseout="watch.hover=false">
 
-                    <i id="close" v-if="watch.hover" class="far fa-times-circle" @click="removeWatch(index)" @mouseover="watch.hover=true" @mouseout="watch.hover=false"></i>
-                    <div v-else @mouseover="watch.hover=true" @mouseout="watch.hover=false">
-                        <p class="medium-font">{{ index + 1 }}</p>
-                    </div>
-                </div>
-                <component :is="watch.obj"></component>
+                <i v-if="watch.hover && watches.length > 1" class="fas fa-times-circle medium-font" @click="removeWatch(index)"></i>
+
+                <div v-else class="medium-font">{{ index + 1 }}</div>
+
             </div>
+            <component :is="watch.obj" style="width: 1px"></component>
+
         </div>
-        <i @click="addWatch" v-if="watches.length < 4" class="fas fa-plus-circle fa-3x"></i>
+        <i @click="addWatch" v-if="watches.length < 4" class="fas fa-plus-circle fa-3x medium-font"></i>
     </div>
 </template>
 
@@ -47,3 +46,12 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
+</style>

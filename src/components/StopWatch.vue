@@ -1,23 +1,22 @@
 <template>
     <div class="d-flex border-bottom flex-fill">
-        <div class="large-font flex-grow-1 d-flex align-items-center justify-content-center" @click="handleMainClick()" :class="[running ? 'run' : 'pause']">
+        <div class="large-font w-50 d-flex align-items-center justify-content-center white-font" @click="handleMainClick" :class="mode">
             {{ formattedTime }}
         </div>
 
-        <div class="w-25">
+        <div class="w-25 white-font">
             <div class="medium-font h-50 yellow d-flex align-items-center justify-content-center" @click="split">
-                Split
+                split
             </div>
 
             <div class="medium-font h-50 orange d-flex align-items-center justify-content-center" @click="resetTimer">
-                Reset
+                reset
             </div>
         </div>
-
         <div class="bg-light w-25">
             <div class="small-font h-25 border-bottom" v-for="(split, index) in splits" :key="index">
                 <div :class="[split.clicked ? 'run' : 'text-muted']">
-                    Split {{ index + 1 }} - {{ split.value }}
+                    split {{ index + 1 }} - {{ split.value }}
                 </div>
             </div>
         </div>
@@ -32,12 +31,12 @@ export default {
     data() {
         return {
             formattedTime: '00:00:00:00',
-
             startTime: null,
             savedTime: null,
             elapsed: moment.duration(0),
             tInterval: null,
 
+            mode: 'paused',
             running: false,
             paused: false,
 
@@ -63,10 +62,25 @@ export default {
         }
     },
 
+    mounted() {
+
+        let self = this; 
+
+        window.addEventListener('keyup', function(e) {
+            if (e.keyCode === 32) {
+                self.handleMainClick();
+            } else if(e.keyCode === 83){
+                self.split();
+            } else if (e.keyCode === 82) {
+                self.resetTimer();
+            }
+        });
+    },
+
     methods: {
         
         handleMainClick() {
-            if(!this.running) {
+            if(this.mode == 'paused') {
                 this.startTimer();
             }else {
                 this.pauseTimer();
@@ -83,19 +97,17 @@ export default {
                 this.formatTime();
             },1);
 
-            this.running = true;
-            this.paused = false;
+            this.mode = 'running';
         },
 
         pauseTimer() {
             clearInterval(this.tInterval);
             this.savedTime = this.elapsed;
-            this.running = false;
-            this.paused = true;
+            this.mode = 'paused';
         },
 
         split() {
-            if(this.running && this.currSplit < 4) {
+            if(this.mode == 'running' && this.currSplit < 4) {
                 this.splits[this.currSplit].value = this.formattedTime;
                 this.splits[this.currSplit].clicked = true;
                 this.currSplit++;
@@ -105,7 +117,7 @@ export default {
         resetTimer() {
             clearInterval(this.tInterval);
             this.savedTime = null;
-            this.running = false;
+            this.mode = 'paused';
             this.formattedTime = '00:00:00:00';
             this.currSplit = 0;
 

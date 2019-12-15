@@ -1,0 +1,6 @@
+- animate transitions
+DONE - add spacebar start/stop
+- fix flicker in mousing in/out of close icon
+- pause/resume timer fix
+DONE - disable close button when only one timer/stopwatch visible
+DONE - add favicon/logo

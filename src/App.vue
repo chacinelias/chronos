@@ -48,9 +48,7 @@ html, body {
 }
 
 #app {
-  display: flex;
   height: 100%;
-  flex-direction: column;
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -73,6 +71,10 @@ html, body {
   font-size: 20px;
 }
 
+.white-font {
+  color: white;
+}
+
 .yellow {
   background-color: #fbb901;
 }
@@ -81,11 +83,11 @@ html, body {
   background-color: #774898;
 }
 
-.run {
+.running {
   background-color: #00a8b5;
 }
 
-.pause {
+.paused {
   background-color: #e62a76;
 }
 
