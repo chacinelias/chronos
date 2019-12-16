@@ -12,12 +12,17 @@
                 </li>
             </ul>
 
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Github</button>
+            <a href="https://github.com/chacinelias/chronos" class="btn-light" style="border-radius: 25px">
+                <i class="fab fa-github medium-font"></i>
+            </a>
+
+            <!-- <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Github</button> -->
         </div>
     </nav>
 </template>
 
 <script>
+
 export default {
     name: 'NavBar',
     props: ['activeCollection'],
