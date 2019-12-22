@@ -6,7 +6,7 @@
         <component :is='activeCollection'></component>
       </keep-alive>
     </div>
-    <Footer />
+    <!-- <Footer /> -->
   </div>
 </template>
 
@@ -75,9 +75,9 @@ html, body {
   color: white;
 }
 
-.yellow {
+/* .yellow {
   background-color: #fbb901;
-}
+} */
 
 .orange {
   background-color: #774898;

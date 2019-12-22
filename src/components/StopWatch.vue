@@ -1,22 +1,19 @@
 <template>
-    <div class="d-flex border-bottom flex-fill">
-        <div class="large-font w-50 d-flex align-items-center justify-content-center white-font" @click="handleMainClick" :class="mode">
+    <div class="dial-container">
+        <div class="main-dial light-font" @click="handleMainClick" :class="mode">
             {{ formattedTime }}
         </div>
 
-        <div class="w-25 white-font">
-            <div class="medium-font h-50 yellow d-flex align-items-center justify-content-center" @click="split">
-                split
-            </div>
+        <div class="sub-dials">
+            <div class="sub-dial h-50 w-100 yellow light-font" @click="split">split</div>
 
-            <div class="medium-font h-50 orange d-flex align-items-center justify-content-center" @click="resetTimer">
-                reset
-            </div>
+            <div class="sub-dial h-50 w-100 purple light-font" @click="resetTimer">reset</div>
         </div>
-        <div class="bg-light w-25">
-            <div class="small-font h-25 border-bottom" v-for="(split, index) in splits" :key="index">
+
+        <div class="splits">
+            <div class="split h-25 w-100" v-for="(split, index) in splits" :key="index">
                 <div :class="[split.clicked ? 'run' : 'text-muted']">
-                    split {{ index + 1 }} - {{ split.value }}
+                    {{ split.value }}
                 </div>
             </div>
         </div>

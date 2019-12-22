@@ -1,42 +1,29 @@
 <template>
-    <div class="d-flex border-bottom flex-fill">
-        <div class="large-font w-50 d-flex align-items-center justify-content-center" :class="mode" @click="handleMainClick(deadline)">
-            <form v-if="mode == 'set'">
-                <div class="d-flex">
-                    <div>
-                        <div class="md-form mt-0">
-                            <input v-model="editTime.hours" type="text" class="form-control" placeholder="hh" data-lpignore="true" @keyup.enter="handleSetClick">
-                        </div>
-                    </div>
+    <div class="dial-container">
+        <div class="main-dial" :class="mode" @click="handleMainClick(deadline)">
 
-                    <div>
-                        <div class="md-form mt-0">
-                            <input v-model="editTime.minutes" type="text" class="form-control" placeholder="mm" data-lpignore="true" @keyup.enter="handleSetClick">
-                        </div>
-                    </div>
-                    
-                    <div>
-                        <div class="md-form mt-0">
-                            <input v-model="editTime.seconds" type="text" class="form-control" placeholder="ss" data-lpignore="true" @keyup.enter="handleSetClick">
-                        </div>
-                    </div>
-                </div>
+            <form v-if="mode == 'set'" class="d-flex">
+                
+                <input v-model="editTime.hours" type="text" class="form-control" placeholder="hh" data-lpignore="true" @keyup.enter="handleSetClick">
+                <input v-model="editTime.minutes" type="text" class="form-control" placeholder="mm" data-lpignore="true" @keyup.enter="handleSetClick">
+                <input v-model="editTime.seconds" type="text" class="form-control" placeholder="ss" data-lpignore="true" @keyup.enter="handleSetClick">
+            
             </form>
 
-            <div class="white-font" v-else>{{ formattedTime }}</div>
+            <div class="light-font" v-else>{{ formattedTime }}</div>
 
         </div>
 
-        <div class="w-25 white-font">
-            <div class="medium-font h-50 yellow d-flex align-items-center justify-content-center" @click="handleSetClick">set</div>
-            <div class="medium-font h-50 orange d-flex align-items-center justify-content-center" @click="resetTimer">reset</div>
+        <div class="sub-dials">
+            <div class="sub-dial h-50 w-100 yellow light-font" @click="handleSetClick">set</div>
+            <div class="sub-dial h-50 w-100 purple light-font" @click="resetTimer">reset</div>
         </div>
 
-        <div class="bg-light w-25">
-            <div class="small-font h-25 border-bottom" @click="setDeadline({ minutes:1 })">1 min</div>
-            <div class="small-font h-25 border-bottom" @click="setDeadline({ minutes:5 })">5 min</div>
-            <div class="small-font h-25 border-bottom" @click="setDeadline({ minutes:10 })">10 min</div>
-            <div class="small-font h-25 border-bottom" @click="setDeadline({ minutes:20 })">20 min</div>
+        <div class="splits">
+            <div class="split h-25 w-100" @click="setDeadline({ minutes:1 })">1 min</div>
+            <div class="split h-25 w-100" @click="setDeadline({ minutes:5 })">5 min</div>
+            <div class="split h-25 w-100" @click="setDeadline({ minutes:10 })">10 min</div>
+            <div class="split h-25 w-100" @click="setDeadline({ minutes:20 })">20 min</div>
         </div>
     </div>
 </template>
@@ -150,28 +137,104 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
+
+.dial-container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.dial-container:hover {
+    cursor: pointer;
+
+}
+
+.main-dial {
+    flex: 1 1 320px;
+
+    display: flex;
+    font-size: 42px;
+    align-items: center;
+    justify-content: center;
+}
+
+.main-dial:hover {
+    text-shadow: 0px 0px 6px rgba(255, 255, 255, 1);
+    -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+    -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+    transition: all 0.2s ease 0s;
+}
+
+.sub-dials {
+    flex: 2 0 120px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+}
+
+.sub-dial {
+    display: inline;
+}
+
+.sub-dial:hover {
+    text-shadow: 0px 0px 6px rgba(255, 255, 255, 1);
+    -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+    -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+    transition: all 0.2s ease 0s;
+}
+
+.splits {
+    flex: 2 0 120px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+}
+
+.split:hover {
+    background: #00a8b5;
+}
+
+.light-font {
+    color: aliceblue;
+}
+
+.yellow {
+    background: #fbb901;
+}
+
+.purple {
+    background: #774898;
+}
+
+/*///////////////////////*/
+
 input[type="text"], textarea {
 
     background-color : #e62a76;
-    color: white;
-    font-size: 72px;
+    color: aliceblue;
+    font-size: 42px;
     border: 0;
     text-align: center;
     border-radius: 0;
-
 }
 
 ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-  color: white;
+  color: aliceblue;
 }
 ::-moz-placeholder { /* Firefox 19+ */
-  color: white;
+  color: aliceblue;
 }
 :-ms-input-placeholder { /* IE 10+ */
-  color: white;
+  color: aliceblue;
 }
 :-moz-placeholder { /* Firefox 18- */
-  color: white;
+  color: aliceblue;
 }
 </style>

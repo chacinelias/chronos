@@ -1,19 +1,19 @@
 <template>
     <div>
-        <p class="display-2">StopWatch</p>
-        <div v-for="(watch, index) in watches" :key="watch.id" class="container row m-2 p-2">
+        <p class="display-3">StopWatch</p>
+        <div v-for="(watch, index) in watches" :key="watch.id" class="timer-container border border-dark rounded-lg">
 
-            <div class="d-flex align-items-center justify-content-center border" style="width: 100px" @mouseover="watch.hover=true" @mouseout="watch.hover=false">
+            <div class="index" style="width: 100px" @mouseover="watch.hover=true" @mouseout="watch.hover=false">
 
-                <i v-if="watch.hover && watches.length > 1" class="fas fa-times-circle medium-font" @click="removeWatch(index)"></i>
+                <i v-if="watch.hover && watches.length > 1" class="fas fa-times-circle fa-2x adder" @click="removeWatch(index)"></i>
 
                 <div v-else class="medium-font">{{ index + 1 }}</div>
 
             </div>
-            <component :is="watch.obj" style="width: 1px"></component>
+            <component class="timer-wrapper" :is="watch.obj"></component>
 
         </div>
-        <i @click="addWatch" v-if="watches.length < 4" class="fas fa-plus-circle fa-3x medium-font"></i>
+        <i @click="addWatch" v-if="watches.length < 4" class="fas fa-plus-circle fa-2x adder"></i>
     </div>
 </template>
 
