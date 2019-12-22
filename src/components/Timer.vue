@@ -151,7 +151,7 @@ export default {
 }
 
 .main-dial {
-    flex: 1 1 200px;
+    flex: 1 1 320px;
 
     display: flex;
     font-size: 42px;
