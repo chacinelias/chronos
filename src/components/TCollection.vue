@@ -54,12 +54,12 @@ export default {
 .timer-container {
     display: flex;
     flex-wrap: wrap;
-    width: 60%;
+    width: 70%;
     margin: 12px auto;
 }
 
 .index {
-    flex: 1 0 80px;
+    flex: 0 0 80px;
 
     display: flex;
     align-items: center;
@@ -68,7 +68,7 @@ export default {
 }
 
 .timer-wrapper {
-    flex: 0 1 580px;
+    flex: 1 1 580px;
 
 }
 

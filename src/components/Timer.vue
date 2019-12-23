@@ -154,7 +154,7 @@ export default {
     flex: 1 1 320px;
 
     display: flex;
-    font-size: 38px;
+    font-size: 42px;
     align-items: center;
     justify-content: center;
 }
