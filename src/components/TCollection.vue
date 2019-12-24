@@ -59,12 +59,11 @@ export default {
 }
 
 .index {
-    flex: 0 0 80px;
+    flex: 1 0 80px;
 
     display: flex;
     align-items: center;
     justify-content: center;
-
 }
 
 .timer-wrapper {
