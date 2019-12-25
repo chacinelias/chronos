@@ -1,5 +1,5 @@
 <template>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand navbar-light bg-light d-flex">
         <a class='navbar-brand' @click="reloadPage">Χρόνος</a>
         <div class="collapse navbar-collapse">
             <ul class='navbar-nav mr-auto'>

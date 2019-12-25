@@ -131,7 +131,7 @@ export default {
             this.setDeadline({ minutes: 5});
         },
         formatTime() {
-            this.formattedTime = this.time.subtract({hours: 16}).format('HH:mm:ss:SS');
+            this.formattedTime = this.time.subtract({hours: 19}).format('HH:mm:ss:SS');
         }
     }
 }
